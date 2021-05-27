@@ -19,7 +19,8 @@ defmodule PollingToSocket.Periodically do
     # ...
 
     # Reschedule once more
-    schedule_work(state)
+    state.work.()
+    schedule_work(state.interval)
 
     {:noreply, state}
   end
