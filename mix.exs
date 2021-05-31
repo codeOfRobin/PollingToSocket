@@ -33,6 +33,7 @@ defmodule PollingToSocket.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:mox, "~> 1.0", only: :test},
       {:phoenix, "~> 1.5.8"},
       {:httpoison, "~> 1.8"},
       {:phoenix_live_dashboard, "~> 0.4"},
