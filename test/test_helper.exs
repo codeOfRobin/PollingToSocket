@@ -1,3 +1,2 @@
-Mox.defmock(PollingToSocket.MockHTTPClient, for: HTTPoison.Base)
-
 ExUnit.start()
+Mox.defmock(PollingToSocket.MockHTTPoison, for: HTTPoison.Base)

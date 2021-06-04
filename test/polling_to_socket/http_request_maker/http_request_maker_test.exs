@@ -5,7 +5,7 @@ defmodule PollingToSocket.HTTPRequestMakerTest do
   setup :verify_on_exit!
 
   test "Simple GET request" do
-    PollingToSocket.MockHTTPClient
+    PollingToSocket.MockHTTPoison
     |> expect(:get, fn _ ->
       {:ok,
        %HTTPoison.Response{

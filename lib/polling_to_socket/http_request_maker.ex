@@ -1,6 +1,4 @@
 defmodule PollingToSocket.HTTPRequestMaker do
-  import HTTPoison
-
   def make_request(from: input) do
     %{"url" => url, "method" => method} = input
 
@@ -10,6 +8,6 @@ defmodule PollingToSocket.HTTPRequestMaker do
   end
 
   defp http_client do
-    Application.get_env(:polling_to_socket, :http_client, HTTPoison)
+    Application.get_env(:polling_to_socket, :httpoison)
   end
 end
