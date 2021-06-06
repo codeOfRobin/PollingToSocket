@@ -10,14 +10,13 @@ defmodule PollingToSocketWeb.PollChannelTest do
         "interval" => 1000
       }
 
-
-      {:ok, _, socket} = join_channel("poll:12345")
+      {:ok, _, _socket} = join_channel("poll:12345", payload)
     end
   end
 
-  defp join_channel(topic) do
+  defp join_channel(topic, payload) do
     PollingToSocketWeb.UserSocket
     |> socket()
-    |> subscribe_and_join(PollingToSocketWeb.PollChannel, topic)
+    |> subscribe_and_join(PollingToSocketWeb.PollChannel, topic, payload)
   end
 end
