@@ -10,6 +10,7 @@ defmodule PollingToSocketWeb.PollChannelTest do
         "interval" => 1000
       }
 
+
       {:ok, _, socket} = join_channel("poll:12345")
     end
   end
