@@ -18,6 +18,6 @@ defmodule PollingToSocket.HTTPClient do
 
   @impl PollingToSocket.HTTPBase
   def get(url: url) do
-    HTTPoison.get(url)
+    Application.get_env(:polling_to_socket, :http_client, nil).get(url)
   end
 end

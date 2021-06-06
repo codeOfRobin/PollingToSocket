@@ -1,7 +1,7 @@
 defmodule PollingToSocket.HTTPRequestMakerTest do
   import Mox
   use ExUnit.Case
-  setup :set_mox_global
+  setup :set_mox_from_context
   setup :verify_on_exit!
 
   test "Simple GET request" do
