@@ -1,14 +1,14 @@
 defmodule PollingToSocket.HTTPRequestMakerTest do
   import Mox
-  import HTTPoison
-  use ExUnit.Case, async: true
+  use ExUnit.Case
+  setup :set_mox_global
   setup :verify_on_exit!
 
   test "Simple GET request" do
     PollingToSocket.MockHTTPoison
-    |> expect(:get, fn _ ->
+    |> expect(:get, fn _url ->
       {:ok,
-       %HTTPoison.Response{
+       %{
          status_code: 200
        }}
     end)

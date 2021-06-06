@@ -3,11 +3,7 @@ defmodule PollingToSocket.HTTPRequestMaker do
     %{"url" => url, "method" => method} = input
 
     case method do
-      "get" -> http_client().get(url)
+      "get" -> PollingToSocket.HTTPClient.get(url: url)
     end
-  end
-
-  defp http_client do
-    Application.get_env(:polling_to_socket, :httpoison)
   end
 end

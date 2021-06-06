@@ -1,2 +1,3 @@
 ExUnit.start()
-Mox.defmock(PollingToSocket.MockHTTPoison, for: HTTPoison.Base)
+Mox.Server.start_link([])
+Mox.defmock(PollingToSocket.MockHTTPoison, for: PollingToSocket.HTTPBase)
