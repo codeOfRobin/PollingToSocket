@@ -1,8 +1,6 @@
 defmodule PollingToSocket.HTTPRequestMakerTest do
   import Mox
   use ExUnit.Case
-  setup :set_mox_from_context
-  setup :verify_on_exit!
 
   test "Simple GET request" do
     PollingToSocket.MockHTTPoison
@@ -15,7 +13,7 @@ defmodule PollingToSocket.HTTPRequestMakerTest do
 
     payload_input = %{
       "method" => "get",
-      "url" => "asdfnjkwaejfwaekf.org"
+      "url" => "example.com"
     }
 
     {:ok, response} = PollingToSocket.HTTPRequestMaker.make_request(from: payload_input)
