@@ -16,7 +16,9 @@ defmodule PollingToSocket.HTTPRequestMakerTest do
       "url" => "example.com"
     }
 
-    {:ok, response} = PollingToSocket.HTTPRequestMaker.make_request(from: payload_input)
+    {:ok, response} =
+      PollingToSocket.HTTPRequestMaker.make_request_closure(from: payload_input).()
+
     assert response.status_code == 200
   end
 end
