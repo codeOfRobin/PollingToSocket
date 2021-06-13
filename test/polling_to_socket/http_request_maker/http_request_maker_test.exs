@@ -12,8 +12,8 @@ defmodule PollingToSocket.HTTPRequestMakerTest do
     end)
 
     payload_input = %{
-      "method" => "get",
-      "url" => "example.com"
+      :method => "get",
+      :url => "example.com"
     }
 
     {:ok, response} =
