@@ -5,8 +5,9 @@ defmodule PollingToSocketWeb.PollChannelTest do
   describe "testing joining channel" do
     test "joining" do
       payload = %{
-        "request" => %{
-          "url" => "https://example.org"
+        request: %{
+          url: "https://example.org",
+          method: "get"
         },
         interval: 100
       }
@@ -23,9 +24,9 @@ defmodule PollingToSocketWeb.PollChannelTest do
          }}
       end)
 
-      assert_receive("done", 150)
-
       {:ok, _, _socket} = join_channel("poll:12345", payload)
+
+      assert_receive("done", 150)
     end
   end
 

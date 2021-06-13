@@ -5,14 +5,15 @@ defmodule PollingToSocketWeb.PollChannel do
   def join("poll:" <> _request_instance, payload, socket) do
     channel = self()
 
-    %{interval: interval, request: request} = payload
+    %{"interval" => interval, "request" => request} = payload
 
     request_input = %{
       :method => request["method"],
       :url => request["url"]
     }
 
-    request_closure = HTTPRequestMaker.make_request(from: request_input)
+    request_closure = HTTPRequestMaker.make_request_closure(from: request_input)
+    IO.inspect(channel)
 
     {:ok, _pid} =
       GenServer.start_link(PollingToSocket.Periodically, %{
@@ -32,7 +33,7 @@ defmodule PollingToSocketWeb.PollChannel do
     {:noreply, socket}
   end
 
-  def handle_info({:make_request, payload}, _socket) do
-    IO.inspect(payload)
+  def handle_info({:make_request, %{work: closure}}, _socket) do
+    closure.()
   end
 end
