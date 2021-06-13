@@ -5,7 +5,7 @@ defmodule PollingToSocketWeb.PollChannelTest do
     test "joining" do
       payload = %{
         "request" => %{
-          "url" => "https://httpbin.org"
+          "url" => "https://example.org"
         },
         "interval" => 1000
       }
