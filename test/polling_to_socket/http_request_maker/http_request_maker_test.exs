@@ -2,6 +2,10 @@ defmodule PollingToSocket.HTTPRequestMakerTest do
   import Mox
   use ExUnit.Case
 
+  setup do
+    Application.put_env(:polling_to_socket, :http_client, PollingToSocket.MockHTTPoison)
+  end
+
   test "Simple GET request" do
     PollingToSocket.MockHTTPoison
     |> expect(:get, fn _url ->
