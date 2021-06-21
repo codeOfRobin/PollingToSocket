@@ -33,7 +33,8 @@ defmodule PollingToSocketWeb.PollChannel do
     {:noreply, socket}
   end
 
-  def handle_info({:make_request, %{work: closure}}, _socket) do
+  def handle_info({:make_request, %{work: closure}}, socket) do
     closure.()
+    {:noreply, socket}
   end
 end

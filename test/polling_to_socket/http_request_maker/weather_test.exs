@@ -3,6 +3,10 @@ defmodule PollingToSocket.HumanizedWeatherTest do
 
   import Mox
 
+  setup %{} do
+    Application.put_env(:polling_to_socket, :weather_api, PollingToSocket.MockWeatherAPI)
+  end
+
   # Make sure mocks are verified when the test exits
   setup :verify_on_exit!
 
