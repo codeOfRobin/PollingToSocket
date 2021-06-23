@@ -7,30 +7,28 @@ defmodule PollingToSocketWeb.PollChannelTest do
     {:ok, bypass: bypass}
   end
 
-  describe "testing joining channel" do
-    test "joining", %{bypass: bypass} do
-      payload = %{
-        request: %{
-          url: "#{endpoint_url(bypass.port)}/status.json",
-          method: "get"
-        },
-        interval: 10
-      }
+  test "joining channel", %{bypass: bypass} do
+    payload = %{
+      request: %{
+        url: "#{endpoint_url(bypass.port)}/status.json",
+        method: "get"
+      },
+      interval: 10
+    }
 
-      random_number = :rand.uniform(50)
-      caller = self()
+    random_number = :rand.uniform(50)
+    caller = self()
 
-      Bypass.expect(bypass, "GET", "/status.json", fn conn ->
-        send(caller, "done")
-        Plug.Conn.resp(conn, 200, ~s<{"data": "all good"}>)
-      end)
+    Bypass.expect(bypass, "GET", "/status.json", fn conn ->
+      send(caller, "done")
+      Plug.Conn.resp(conn, 200, ~s<{"data": "all good"}>)
+    end)
 
-      {:ok, _, _socket} = join_channel("poll:12345", payload)
+    {:ok, _, _socket} = join_channel("poll:12345", payload)
 
-      Enum.each(1..random_number, fn x ->
-        assert_receive("done", 50 * x)
-      end)
-    end
+    Enum.each(1..random_number, fn x ->
+      assert_receive("done", 50 * x)
+    end)
   end
 
   defp endpoint_url(port), do: "http://localhost:#{port}/"
