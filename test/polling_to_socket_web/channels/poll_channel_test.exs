@@ -27,7 +27,7 @@ defmodule PollingToSocketWeb.PollChannelTest do
     {:ok, _, _socket} = join_channel("poll:12345", payload)
 
     Enum.each(1..random_number, fn x ->
-      assert_receive("done", 50 * x)
+      assert_receive("done", 100 * x)
     end)
   end
 
