@@ -1,13 +1,12 @@
 defmodule PollingToSocketWeb.PollChannelTest do
   use PollingToSocketWeb.ChannelCase, async: true
-  import Mox
 
   setup do
     bypass = Bypass.open()
     {:ok, bypass: bypass}
   end
 
-  test "joining channel", %{bypass: bypass} do
+  test "joining channel triggers requests", %{bypass: bypass} do
     payload = %{
       request: %{
         url: "#{endpoint_url(bypass.port)}/status.json",
@@ -21,13 +20,21 @@ defmodule PollingToSocketWeb.PollChannelTest do
 
     Bypass.expect(bypass, "GET", "/status.json", fn conn ->
       send(caller, "done")
-      Plug.Conn.resp(conn, 200, ~s<{"data": "all good"}>)
+
+      conn
+      |> Plug.Conn.put_resp_header("Via", "1.1 vegur")
+      |> Plug.Conn.put_resp_content_type("application/json")
+      |> Plug.Conn.resp(200, ~s<{"data": "all good"}>)
     end)
 
     {:ok, _, _socket} = join_channel("poll:12345", payload)
 
     Enum.each(1..random_number, fn x ->
       assert_receive("done", 100 * x)
+
+      assert_broadcast("received_data", %HTTPoison.Response{
+        body: ~s<{"data": "all good"}>
+      })
     end)
   end
 
