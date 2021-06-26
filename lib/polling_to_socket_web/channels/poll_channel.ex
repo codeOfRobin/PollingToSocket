@@ -13,7 +13,6 @@ defmodule PollingToSocketWeb.PollChannel do
     }
 
     request_closure = HTTPRequestMaker.make_request_closure(from: request_input)
-    IO.inspect(channel)
 
     {:ok, _pid} =
       GenServer.start_link(PollingToSocket.Periodically, %{
@@ -34,7 +33,16 @@ defmodule PollingToSocketWeb.PollChannel do
   end
 
   def handle_info({:make_request, %{work: closure}}, socket) do
-    closure.()
+    {:ok, response} = closure.()
+
+    broadcast(socket, "received_data", %{
+      body: response.body,
+      headers:
+        Enum.reduce(response.headers, %{}, fn {key, value}, dict ->
+          Map.put(dict, key, value)
+        end)
+    })
+
     {:noreply, socket}
   end
 end
