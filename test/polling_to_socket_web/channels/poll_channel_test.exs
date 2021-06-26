@@ -32,8 +32,12 @@ defmodule PollingToSocketWeb.PollChannelTest do
     Enum.each(1..random_number, fn x ->
       assert_receive("done", 100 * x)
 
-      assert_broadcast("received_data", %HTTPoison.Response{
-        body: ~s<{"data": "all good"}>
+      assert_broadcast("received_data", %{
+        body: ~s<{"data": "all good"}>,
+        headers: %{
+          "Via" => "1.1 vegur",
+          "content-type" => "application/json; charset=utf-8"
+        }
       })
     end)
   end

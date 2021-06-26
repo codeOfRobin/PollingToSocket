@@ -35,7 +35,14 @@ defmodule PollingToSocketWeb.PollChannel do
   def handle_info({:make_request, %{work: closure}}, socket) do
     {:ok, response} = closure.()
 
-    broadcast(socket, "received_data", response)
+    broadcast(socket, "received_data", %{
+      body: response.body,
+      headers:
+        Enum.reduce(response.headers, %{}, fn {key, value}, dict ->
+          Map.put(dict, key, value)
+        end)
+    })
+
     {:noreply, socket}
   end
 end
