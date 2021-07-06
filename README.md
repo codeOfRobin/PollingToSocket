@@ -1,3 +1,7 @@
+# Archived
+
+Please refer to the [new repo](https://github.com/codeOfRobin/Napolleon/)
+
 # PollingToSocket
 
 WARNING: This is extremely alpha software. Expect breaking changes.
